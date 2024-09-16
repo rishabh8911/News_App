@@ -1,4 +1,5 @@
 const API_KEY="109572a17ca04a80930e792eb599ec7e"
+const corsProxy = "https://cors-anywhere.herokuapp.com/"; 
 const url ="https://newsapi.org/v2/everything?q="
 
 
@@ -15,11 +16,16 @@ const Politice = document.getElementById('politics')
 window.addEventListener('load', ()=> fetchNews("India"));
 async function fetchNews(query) {
 
-    const res = await fetch(`${url}${query}&apikey=${API_KEY}`)
+  try {
+    const res = await fetch(`${corsProxy}${url}${encodeURIComponent(query)}&apiKey=${API_KEY}`);
     const data = await res.json();
     console.log(data);
-    
     bindData(data.articles);
+} catch (error) {
+    console.error('Error fetching news:', error);
+}
+console.log(data);
+
 
 }
 
@@ -100,8 +106,3 @@ function bindData(articles){
     IPL.addEventListener('click', () => fetchNews('IPL'));
     Finance.addEventListener('click', () => fetchNews('Finance'));
     Politice.addEventListener('click', () => fetchNews('Politics'));
-
-
-
-
-    
