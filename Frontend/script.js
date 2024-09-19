@@ -1,49 +1,35 @@
 const API_KEY="109572a17ca04a80930e792eb599ec7e"
-const backendUrl = 'http://localhost:4000/news';
-
-
-
+const url ="https://newsapi.org/v2/everything?q="
 const searchButton = document.getElementById('search-button');
 const searchInput = document.getElementById('search-input');
-
 const IPL = document.getElementById('ipl');
 const Finance = document.getElementById('finance')
 const Politice = document.getElementById('politics')
-
-
-
 window.addEventListener('load', ()=> fetchNews("India"));
 async function fetchNews(query) {
-  const res = await fetch(`${backendUrl}?q=${query}`);
-  const data = await res.json();
-  console.log(data);
-  bindData(data.articles);
+    const res = await fetch(`${url}${query}&apikey=${API_KEY}`)
+    const data = await res.json();
+    console.log(data);
+    
+    bindData(data.articles);
 }
-
-
 function bindData(articles){
     const cardsContainer = document.getElementById('cards-container')
     const newsCardtemplate = document.getElementById('template-news-card')
-
     cardsContainer.innerHTML= "";
-
-
     articles.forEach((article) => {
         if(!article.urlToImage) return;
         const cardClone = newsCardtemplate.content.cloneNode(true);
         fillDataInCard(cardClone, article);
         cardsContainer.appendChild(cardClone);
     });
-
 }
-
     function fillDataInCard(cardClone, article){
         const newsImg = cardClone.querySelector("#news-img");
         const newsTitle = cardClone.querySelector("#news-title");
         const newsSource = cardClone.querySelector("#news-source");
         const newsDesc =  cardClone.querySelector("#news-Desc");
         const newsLink = cardClone.querySelector("#news-link")
-
         if (newsImg) {
             newsImg.src = article.urlToImage;
         } else {
@@ -70,15 +56,12 @@ function bindData(articles){
         } else {
             console.error("Source element not found in the template.");
         }
-
         if(newsLink){
             newsLink.href= article.url;
-
         }else{
             console.log("element not found")
         }
     }
-
     searchButton.addEventListener('click', () => {
         const query = searchInput.value.trim();
         if (query) {
@@ -94,7 +77,6 @@ function bindData(articles){
             }
         }
     });
-
     IPL.addEventListener('click', () => fetchNews('IPL'));
     Finance.addEventListener('click', () => fetchNews('Finance'));
     Politice.addEventListener('click', () => fetchNews('Politics'));
