@@ -1,16 +1,15 @@
-const API_KEY = "109572a17ca04a80930e792eb599ec7e";
-const url = "https://your-vercel-project.vercel.app/api/proxy?query="; // Update this to your Vercel project URL
+const url = "https://your-vercel-project.vercel.app/api/proxy?query="; // Vercel proxy URL
 const searchButton = document.getElementById('search-button');
 const searchInput = document.getElementById('search-input');
 const IPL = document.getElementById('ipl');
 const Finance = document.getElementById('finance');
-const Politice = document.getElementById('politics');
+const Politics = document.getElementById('politics');
 
 window.addEventListener('load', () => fetchNews("India"));
 
 async function fetchNews(query) {
     try {
-        const res = await fetch(`${url}${query}&apiKey=${API_KEY}`); // Using the proxy server
+        const res = await fetch(`${url}${query}`); // No apiKey needed here
         const data = await res.json();
         console.log(data);
         bindData(data.articles);
@@ -90,4 +89,4 @@ searchInput.addEventListener('keydown', (event) => {
 
 IPL.addEventListener('click', () => fetchNews('IPL'));
 Finance.addEventListener('click', () => fetchNews('Finance'));
-Politice.addEventListener('click', () => fetchNews('Politics'));
+Politics.addEventListener('click', () => fetchNews('Politics'));
