@@ -6,13 +6,21 @@ const IPL = document.getElementById('ipl');
 const Finance = document.getElementById('finance')
 const Politice = document.getElementById('politics')
 window.addEventListener('load', ()=> fetchNews("India"));
+
+
 async function fetchNews(query) {
-    const res = await fetch(`${url}${query}&apikey=${API_KEY}`)
-    const data = await res.json();
-    console.log(data);
-    
-    bindData(data.articles);
+    try{
+        const res = await fetch(`${url}${query}&apiKey=${API_KEY}`);// Using the proxy server
+        const data = await res.json();
+        console.log(data);
+        bindData(data.articles);
+
+    }catch(error){
+        console.log(error);
+    }
+   
 }
+
 function bindData(articles){
     const cardsContainer = document.getElementById('cards-container')
     const newsCardtemplate = document.getElementById('template-news-card')
