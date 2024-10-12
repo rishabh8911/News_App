@@ -1,4 +1,5 @@
-const url = "https://your-vercel-project.vercel.app/api/proxy?query="; // Vercel proxy URL
+const API_KEY="109572a17ca04a80930e792eb599ec7e"
+const url ="https://newsapi.org/v2/everything?q="
 const searchButton = document.getElementById('search-button');
 const searchInput = document.getElementById('search-input');
 const IPL = document.getElementById('ipl');
@@ -9,7 +10,7 @@ window.addEventListener('load', () => fetchNews("India"));
 
 async function fetchNews(query) {
     try {
-        const res = await fetch(`${url}${query}`); // No apiKey needed here
+        const res = await fetch(`${url}${query}&apikey=${API_KEY}`); // No apiKey needed here
         const data = await res.json();
         console.log(data);
         bindData(data.articles);
